@@ -1,0 +1,35 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS game_portal;
+USE game_portal;
+
+-- Table 1: users
+-- Stores user authentication data (username and password)
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table 2: game_scores
+-- Stores game scores for each user across all games
+CREATE TABLE IF NOT EXISTS game_scores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    game_name VARCHAR(255) NOT NULL,
+    difficulty_level VARCHAR(50) NOT NULL,
+    score INT NOT NULL,
+    played_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table 3: contact_messages
+-- Stores messages submitted via the "Contact Us" form
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT, -- Nullable, as guests can submit messages
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    submitted_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

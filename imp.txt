@@ -1,0 +1,12 @@
+
+# Create virtual environment (if not already created)
+python -m venv venv
+
+# Activate virtual environment
+.\venv\Scripts\activate
+
+# Install dependencies from requirements.txt
+pip install -r requirements.txt
+
+# Verify installed packages
+pip list
